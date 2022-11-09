@@ -1,10 +1,11 @@
 import dxDataSource from 'devextreme/data/data_source';
-import dxTextBox from 'devextreme/ui/text_box';
 import dxNumberBox from 'devextreme/ui/number_box';
 import dxTagBox, { dxTagBoxOptions } from 'devextreme/ui/tag_box';
+import dxTextBox from 'devextreme/ui/text_box';
+import dxTextEditor from 'devextreme/ui/text_box/ui.text_editor.base';
+import dxValidator from 'devextreme/ui/validator';
 import { Subject } from 'rxjs';
 import { ValueChangedInfo } from 'devextreme/ui/editor/editor';
-import dxTextEditor from 'devextreme/ui/text_box/ui.text_editor.base';
 
 type DadosEvento = [string, unknown];
 
@@ -56,6 +57,15 @@ export class FormularioComponent {
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
             });
+            if (campo.obrigatorio) {
+              new dxValidator(element, {
+                validationRules: [
+                  {
+                    type: 'required',
+                  },
+                ],
+              });
+            }
             container.appendChild(element);
             this.componentes.push(component);
           }

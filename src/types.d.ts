@@ -14,6 +14,7 @@ interface ICampoTexto extends ICampo {
   tipo: 'texto';
   propriedade: string;
   etiqueta: string;
+  obrigatorio?: boolean;
   comprimentoMin: number;
   comprimentoMax: number;
 }

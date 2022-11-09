@@ -37,6 +37,7 @@ export class AppComponent {
             propriedade: 'Nome',
             comprimentoMin: 3,
             comprimentoMax: 150,
+            obrigatorio: true,
           },
           {
             tipo: 'texto',
