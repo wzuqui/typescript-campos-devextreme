@@ -69,6 +69,8 @@ export class FormularioComponent {
               min: campo.valorMinimo,
               max: campo.valorMaximo,
               value: dados[campo.propriedade],
+              showSpinButtons: true,
+              showClearButton: true,
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
             });

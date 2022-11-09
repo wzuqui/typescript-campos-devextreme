@@ -15,7 +15,7 @@ export class AppComponent {
       formularioDiv,
       {
         Nome: 'Willian',
-        SobreNome: 'Zuqui',
+        Sobrenome: 'Zuqui',
         Idade: 32,
         Permissoes: [1],
         FuzoHorario: [Intl.DateTimeFormat().resolvedOptions().timeZone],
@@ -40,8 +40,8 @@ export class AppComponent {
           },
           {
             tipo: 'texto',
-            etiqueta: 'SobreNome',
-            propriedade: 'SobreNome',
+            etiqueta: 'Sobrenome',
+            propriedade: 'Sobrenome',
             comprimentoMin: 3,
             comprimentoMax: 150,
           },
