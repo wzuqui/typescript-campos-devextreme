@@ -6,21 +6,41 @@ export class AppComponent {
     formularioDiv.classList.add('formulario');
     container.appendChild(formularioDiv);
 
-    new FormularioComponent(this._obterCampos(), formularioDiv, {
-      Nome: 'Willian',
-      Idade: 32,
-      Permissoes: [1],
-    });
+    new FormularioComponent(
+      this._obterCampos(),
+      formularioDiv,
+      {
+        Nome: 'Willian',
+        SobreNome: 'Zuqui',
+        Idade: 32,
+        Permissoes: [1],
+      },
+      undefined,
+      true
+    );
   }
 
   private _obterCampos() {
     let retorno: Campo[] = [
       {
-        tipo: 'texto',
-        etiqueta: 'Nome',
-        propriedade: 'Nome',
-        comprimentoMin: 3,
-        comprimentoMax: 150,
+        tipo: 'agrupador',
+        colunas: 2,
+        campos: [
+          {
+            tipo: 'texto',
+            etiqueta: 'Nome',
+            propriedade: 'Nome',
+            comprimentoMin: 3,
+            comprimentoMax: 150,
+          },
+          {
+            tipo: 'texto',
+            etiqueta: 'SobreNome',
+            propriedade: 'SobreNome',
+            comprimentoMin: 3,
+            comprimentoMax: 150,
+          },
+        ],
       },
       {
         tipo: 'numerico',

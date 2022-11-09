@@ -4,15 +4,29 @@ import dxTagBox from 'devextreme/ui/tag_box';
 import { Subject } from 'rxjs';
 import { ValueChangedInfo } from 'devextreme/ui/editor/editor';
 
+type DadosEvento = [string, unknown];
+
 export class FormularioComponent {
+  private _debug: HTMLPreElement;
+
   constructor(
     campos: Campo[],
     container: HTMLElement,
     public dados: object = {},
-    public dados$ = new Subject<[string, unknown]>()
+    public dados$ = new Subject<DadosEvento>(),
+    public debug = false
   ) {
     campos.forEach((campo) => {
       switch (campo.tipo) {
+        case 'agrupador':
+          {
+            const element = document.createElement('div');
+            container.appendChild(element);
+            const dados$ = new Subject<DadosEvento>();
+            new FormularioComponent(campo.campos, element, dados, dados$);
+            dados$.subscribe((evento) => this._atualizarDados(evento));
+          }
+          break;
         case 'texto':
           {
             const element = document.createElement('div');
@@ -73,18 +87,16 @@ export class FormularioComponent {
           break;
       }
     });
+    this._debug = document.createElement('pre');
+    container.appendChild(this._debug);
+    this.dados$.subscribe((evento) => this._atualizarDados(evento));
+  }
 
-    const camposPre = document.createElement('pre');
-    camposPre.innerText = JSON.stringify(campos, null, 2);
-    container.appendChild(camposPre);
-
-    const dadosPre = document.createElement('pre');
-    camposPre.innerText = JSON.stringify(dados, null, 2);
-    container.appendChild(dadosPre);
-
-    this.dados$.subscribe(([propriedade, valor]) => {
-      this.dados = { ...this.dados, [propriedade]: valor };
-      camposPre.innerText = JSON.stringify(this.dados, null, 2);
-    });
+  private _atualizarDados(evento: DadosEvento): void {
+    const [propriedade, valor] = evento;
+    this.dados = { ...this.dados, [propriedade]: valor };
+    if (this.debug) {
+      this._debug.innerText = JSON.stringify(this.dados, null, 2);
+    }
   }
 }

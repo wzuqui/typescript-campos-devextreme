@@ -1,27 +1,41 @@
 interface ICampo {
-  propriedade: string;
-  etiqueta: string;
-  tipo: 'numerico' | 'texto' | 'selecao-multipla';
+  tipo: 'numerico' | 'texto' | 'selecao-multipla' | 'agrupador';
 }
 
 interface ICampoNumero extends ICampo {
   tipo: 'numerico';
+  propriedade: string;
+  etiqueta: string;
   valorMinimo: number;
   valorMaximo: number;
 }
 
 interface ICampoTexto extends ICampo {
   tipo: 'texto';
+  propriedade: string;
+  etiqueta: string;
   comprimentoMin: number;
   comprimentoMax: number;
 }
 
+interface ICampoAgrupador {
+  tipo: 'agrupador';
+  colunas?: number;
+  campos: Campo[];
+}
+
 interface ICampoSelecaoMultipla<T = any> extends ICampo {
   tipo: 'selecao-multipla';
+  propriedade: string;
+  etiqueta: string;
   fonteDados: T[];
   identificador: keyof T;
   descricao: keyof T | ((item: T) => string);
   modelo?: (dados: T, elemento: HTMLElement) => void;
 }
 
-type Campo = ICampoNumero | ICampoTexto | ICampoSelecaoMultipla;
+type Campo =
+  | ICampoNumero
+  | ICampoTexto
+  | ICampoAgrupador
+  | ICampoSelecaoMultipla;
