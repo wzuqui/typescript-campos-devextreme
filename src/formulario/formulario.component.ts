@@ -49,6 +49,8 @@ export class FormularioComponent {
           {
             const element = document.createElement('div');
             element.classList.add('campo');
+            container.appendChild(element);
+
             const component = new dxTextBox(element, {
               maxLength: campo.comprimentoMax,
               label: campo.etiqueta,
@@ -66,7 +68,6 @@ export class FormularioComponent {
                 ],
               });
             }
-            container.appendChild(element);
             this.componentes.push(component);
           }
           break;
@@ -75,6 +76,7 @@ export class FormularioComponent {
             const element = document.createElement('div');
             element.classList.add('campo');
             container.appendChild(element);
+
             const component = new dxNumberBox(element, {
               label: campo.etiqueta,
               min: campo.valorMinimo,
@@ -85,6 +87,15 @@ export class FormularioComponent {
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
             });
+            if (campo.obrigatorio) {
+              new dxValidator(element, {
+                validationRules: [
+                  {
+                    type: 'required',
+                  },
+                ],
+              });
+            }
             this.componentes.push(component as dxTextEditor);
           }
           break;

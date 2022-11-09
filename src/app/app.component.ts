@@ -41,6 +41,7 @@ export class AppComponent {
           },
           {
             tipo: 'texto',
+            obrigatorio: true,
             etiqueta: 'Sobrenome',
             propriedade: 'Sobrenome',
             comprimentoMin: 3,
@@ -48,6 +49,7 @@ export class AppComponent {
           },
           {
             tipo: 'numerico',
+            obrigatorio: true,
             propriedade: 'Idade',
             etiqueta: 'Idade',
             valorMinimo: 1,
@@ -61,6 +63,7 @@ export class AppComponent {
         campos: [
           {
             tipo: 'selecao-multipla',
+            obrigatorio: true,
             propriedade: 'FuzoHorario',
             etiqueta: 'Fuzo horário',
             descricao: 'nome',
@@ -69,6 +72,7 @@ export class AppComponent {
           },
           {
             tipo: 'selecao-multipla',
+            obrigatorio: true,
             propriedade: 'Permissoes',
             etiqueta: 'Permissões',
             fonteDados: this.service.permissoes,

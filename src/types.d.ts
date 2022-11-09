@@ -7,6 +7,7 @@ interface ICampoNumero extends ICampo {
   propriedade: string;
   etiqueta: string;
   valorMinimo: number;
+  obrigatorio: boolean;
   valorMaximo: number;
 }
 
@@ -14,7 +15,7 @@ interface ICampoTexto extends ICampo {
   tipo: 'texto';
   propriedade: string;
   etiqueta: string;
-  obrigatorio?: boolean;
+  obrigatorio: boolean;
   comprimentoMin: number;
   comprimentoMax: number;
 }
@@ -29,6 +30,7 @@ interface ICampoSelecaoMultipla<T = any> extends ICampo {
   tipo: 'selecao-multipla';
   propriedade: string;
   etiqueta: string;
+  obrigatorio: boolean;
   fonteDados: T[];
   identificador: keyof T;
   descricao: keyof T | ((item: T) => string);
