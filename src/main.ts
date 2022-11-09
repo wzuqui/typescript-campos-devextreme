@@ -3,8 +3,7 @@ import { loadMessages, locale } from 'devextreme/localization';
 import { messages } from './devextreme-pt';
 
 // stylesheets
-import 'devextreme/dist/css/dx.light.css';
-import './style.css';
+import './style.scss';
 
 import { AppComponent } from './app/app.component';
 

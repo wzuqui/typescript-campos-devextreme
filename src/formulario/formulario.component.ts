@@ -8,7 +8,7 @@ import dxTextEditor from 'devextreme/ui/text_box/ui.text_editor.base';
 
 type DadosEvento = [string, unknown];
 
-import './formulario.component.css';
+import './formulario.component.scss';
 
 export class FormularioComponent {
   public componentes: dxTextEditor[] = [];
