@@ -12,9 +12,9 @@ body {
 @font-face {
   font-family: DXIcons;
   src: local('DevExtreme Generic Icons'), local('devextreme_generic_icons'),
-    url('devextreme/icons/dxicons.woff2') format('woff2'),
-    url('devextreme/icons/dxicons.woff') format('woff'),
-    url('devextreme/icons/dxicons.ttf') format('truetype');
+    url('~devextreme/dist/css/icons/dxicons.woff2') format('woff2'),
+    url('~devextreme/dist/css/icons/dxicons.woff') format('woff'),
+    url('~devextreme/dist/css/icons/dxicons.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
