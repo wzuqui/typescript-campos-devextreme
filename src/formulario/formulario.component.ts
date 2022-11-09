@@ -8,6 +8,8 @@ import dxTextEditor from 'devextreme/ui/text_box/ui.text_editor.base';
 
 type DadosEvento = [string, unknown];
 
+import './formulario.component.css';
+
 export class FormularioComponent {
   public componentes: dxTextEditor[] = [];
   private _debug: HTMLPreElement;
@@ -23,17 +25,18 @@ export class FormularioComponent {
       switch (campo.tipo) {
         case 'agrupador':
           {
-            const fieldset = document.createElement('fieldset');
-            container.appendChild(fieldset);
+            const element = document.createElement('fieldset');
+            element.classList.add('campo');
+            container.appendChild(element);
 
             const legend = document.createElement('legend');
             legend.innerText = campo.titulo;
-            fieldset.appendChild(legend);
+            element.appendChild(legend);
 
             const dados$ = new Subject<DadosEvento>();
             const formulario = new FormularioComponent(
               campo.campos,
-              fieldset,
+              element,
               dados,
               dados$
             );
@@ -44,6 +47,7 @@ export class FormularioComponent {
         case 'texto':
           {
             const element = document.createElement('div');
+            element.classList.add('campo');
             const component = new dxTextBox(element, {
               maxLength: campo.comprimentoMax,
               label: campo.etiqueta,
@@ -58,6 +62,7 @@ export class FormularioComponent {
         case 'numerico':
           {
             const element = document.createElement('div');
+            element.classList.add('campo');
             container.appendChild(element);
             const component = new dxNumberBox(element, {
               label: campo.etiqueta,
@@ -73,6 +78,7 @@ export class FormularioComponent {
         case 'selecao-multipla':
           {
             const element = document.createElement('div');
+            element.classList.add('campo');
             container.appendChild(element);
 
             const options: dxTagBoxOptions = {

@@ -3,20 +3,15 @@ body {
   margin: 0;
   padding: 0;
 }
-
-fieldset {
-  border: 1px solid darkgray;
-  border-radius: 6px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#app {
-  padding: 5px;
-}
-
-@font-face {
+font-face {
   font-family: DXIcons;
-  src: local('DevExtreme Generic Icons'), local('devextreme_generic_icons'),
-    url('~devextreme/dist/css/icons/dxicons.woff2') format('woff2'),
+  src: url('~devextreme/dist/css/icons/dxicons.woff2') format('woff2'),
     url('~devextreme/dist/css/icons/dxicons.woff') format('woff'),
     url('~devextreme/dist/css/icons/dxicons.ttf') format('truetype');
   font-weight: 400;

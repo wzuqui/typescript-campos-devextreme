@@ -3,6 +3,7 @@ import { FormularioComponent } from '../formulario/formulario.component';
 
 export class AppComponent {
   constructor(container: HTMLElement, public service = new AppService()) {
+    container.classList.add('app');
     const formularioDiv = document.createElement('div');
     formularioDiv.classList.add('formulario');
     container.appendChild(formularioDiv);
