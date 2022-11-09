@@ -1,7 +1,8 @@
+import { AppService } from './app.service';
 import { FormularioComponent } from './formulario.component';
 
 export class AppComponent {
-  constructor(container: HTMLElement) {
+  constructor(container: HTMLElement, public service = new AppService()) {
     const formularioDiv = document.createElement('div');
     formularioDiv.classList.add('formulario');
     container.appendChild(formularioDiv);
@@ -14,6 +15,7 @@ export class AppComponent {
         SobreNome: 'Zuqui',
         Idade: 32,
         Permissoes: [1],
+        FuzoHorario: [Intl.DateTimeFormat().resolvedOptions().timeZone],
       },
       undefined,
       true
@@ -21,10 +23,10 @@ export class AppComponent {
   }
 
   private _obterCampos() {
-    let retorno: Campo[] = [
+    const retorno: Campo[] = [
       {
         tipo: 'agrupador',
-        colunas: 2,
+        titulo: 'Dados pessoais',
         campos: [
           {
             tipo: 'texto',
@@ -40,42 +42,40 @@ export class AppComponent {
             comprimentoMin: 3,
             comprimentoMax: 150,
           },
+          {
+            tipo: 'numerico',
+            propriedade: 'Idade',
+            etiqueta: 'Idade',
+            valorMinimo: 1,
+            valorMaximo: 150,
+          },
         ],
       },
       {
-        tipo: 'numerico',
-        propriedade: 'Idade',
-        etiqueta: 'Idade',
-        valorMinimo: 1,
-        valorMaximo: 150,
-      },
-      {
-        tipo: 'selecao-multipla',
-        propriedade: 'Permissoes',
-        etiqueta: 'Permissões',
-        fonteDados: [
+        tipo: 'agrupador',
+        titulo: 'Configurações',
+        campos: [
           {
-            id: 1,
-            nome: 'Administrador',
+            tipo: 'selecao-multipla',
+            propriedade: 'FuzoHorario',
+            etiqueta: 'Fuzo horário',
+            descricao: 'nome',
+            identificador: 'id',
+            fonteDados: this.service.fuzoHorarios,
           },
           {
-            id: 2,
-            nome: 'Editor',
-          },
-          {
-            id: 3,
-            nome: 'Visualizador',
-          },
+            tipo: 'selecao-multipla',
+            propriedade: 'Permissoes',
+            etiqueta: 'Permissões',
+            fonteDados: this.service.permissoes,
+            descricao: 'nome',
+            identificador: 'id',
+          } as ICampoSelecaoMultipla<{
+            id: number;
+            nome: string;
+          }> as Campo,
         ],
-        descricao: (item) => `${item.nome} (${item.id})`,
-        modelo: (item, elemento) => {
-          elemento.innerHTML = item.nome;
-        },
-        identificador: 'id',
-      } as ICampoSelecaoMultipla<{
-        id: number;
-        nome: string;
-      }> as Campo,
+      },
     ];
     return retorno;
   }

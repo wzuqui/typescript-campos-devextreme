@@ -20,7 +20,7 @@ interface ICampoTexto extends ICampo {
 
 interface ICampoAgrupador {
   tipo: 'agrupador';
-  colunas?: number;
+  titulo: string;
   campos: Campo[];
 }
 

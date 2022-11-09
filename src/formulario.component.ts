@@ -1,12 +1,15 @@
+import dxDataSource from 'devextreme/data/data_source';
 import dxTextBox from 'devextreme/ui/text_box';
 import dxNumberBox from 'devextreme/ui/number_box';
-import dxTagBox from 'devextreme/ui/tag_box';
+import dxTagBox, { dxTagBoxOptions } from 'devextreme/ui/tag_box';
 import { Subject } from 'rxjs';
 import { ValueChangedInfo } from 'devextreme/ui/editor/editor';
+import dxTextEditor from 'devextreme/ui/text_box/ui.text_editor.base';
 
 type DadosEvento = [string, unknown];
 
 export class FormularioComponent {
+  public componentes: dxTextEditor[] = [];
   private _debug: HTMLPreElement;
 
   constructor(
@@ -20,17 +23,28 @@ export class FormularioComponent {
       switch (campo.tipo) {
         case 'agrupador':
           {
-            const element = document.createElement('div');
-            container.appendChild(element);
+            const fieldset = document.createElement('fieldset');
+            container.appendChild(fieldset);
+
+            const legend = document.createElement('legend');
+            legend.innerText = campo.titulo;
+            fieldset.appendChild(legend);
+
             const dados$ = new Subject<DadosEvento>();
-            new FormularioComponent(campo.campos, element, dados, dados$);
+            const formulario = new FormularioComponent(
+              campo.campos,
+              fieldset,
+              dados,
+              dados$
+            );
             dados$.subscribe((evento) => this._atualizarDados(evento));
+            this.componentes.push(...formulario.componentes);
           }
           break;
         case 'texto':
           {
             const element = document.createElement('div');
-            new dxTextBox(element, {
+            const component = new dxTextBox(element, {
               maxLength: campo.comprimentoMax,
               label: campo.etiqueta,
               value: dados[campo.propriedade],
@@ -38,13 +52,14 @@ export class FormularioComponent {
                 this.dados$.next([campo.propriedade, evento.value]),
             });
             container.appendChild(element);
+            this.componentes.push(component);
           }
           break;
         case 'numerico':
           {
             const element = document.createElement('div');
             container.appendChild(element);
-            new dxNumberBox(element, {
+            const component = new dxNumberBox(element, {
               label: campo.etiqueta,
               min: campo.valorMinimo,
               max: campo.valorMaximo,
@@ -52,37 +67,60 @@ export class FormularioComponent {
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
             });
+            this.componentes.push(component as dxTextEditor);
           }
           break;
         case 'selecao-multipla':
           {
             const element = document.createElement('div');
             container.appendChild(element);
-            new dxTagBox(element, {
-              items: campo.fonteDados,
+
+            const options: dxTagBoxOptions = {
+              dataSource: new dxDataSource({
+                store: campo.fonteDados,
+                paginate: true,
+                pageSize: 10,
+              }),
               label: campo.etiqueta,
               valueExpr: campo.identificador as string,
               value: dados[campo.propriedade],
-              displayExpr:
-                typeof campo.descricao === 'string'
-                  ? campo.descricao
-                  : typeof campo.descricao === 'function'
-                  ? (evento) =>
-                      (campo.descricao as (item: unknown) => string)(evento)
-                  : undefined,
-              itemTemplate:
-                typeof campo.modelo === 'string'
-                  ? campo.modelo
-                  : typeof campo.modelo === 'function'
-                  ? (evento) => {
-                      const retorno = document.createElement('div');
-                      campo.modelo(evento, retorno);
-                      return retorno;
-                    }
-                  : undefined,
+              showClearButton: true,
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
-            });
+            };
+
+            if (campo.descricao) {
+              switch (typeof campo.descricao) {
+                case 'string':
+                  options.displayExpr = campo.descricao;
+                  break;
+                case 'function':
+                  options.displayExpr = (evento) =>
+                    (campo.descricao as (item: unknown) => string)(evento);
+                  break;
+                default:
+                  break;
+              }
+            }
+            if (campo.modelo) {
+              switch (typeof campo.modelo) {
+                case 'string':
+                  options.itemTemplate = campo.modelo;
+                  break;
+                case 'function':
+                  options.itemTemplate = (evento) => {
+                    const retorno = document.createElement('div');
+                    campo.modelo(evento, retorno);
+                    return retorno;
+                  };
+                  break;
+                default:
+                  break;
+              }
+            }
+
+            const component = new dxTagBox(element, options);
+            this.componentes.push(component as dxTextEditor);
           }
           break;
       }
@@ -90,6 +128,9 @@ export class FormularioComponent {
     this._debug = document.createElement('pre');
     container.appendChild(this._debug);
     this.dados$.subscribe((evento) => this._atualizarDados(evento));
+
+    const primeiro = this.componentes.find((p) => p);
+      primeiro.focus();
   }
 
   private _atualizarDados(evento: DadosEvento): void {
