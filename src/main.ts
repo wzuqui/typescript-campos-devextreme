@@ -1,6 +1,6 @@
 import DxConfig from 'devextreme/core/config';
 import { loadMessages, locale } from 'devextreme/localization';
-import ptMessages from './devextreme-pt.json';
+import { messages } from './devextreme-pt';
 
 // stylesheets
 import 'devextreme/dist/css/dx.light.css';
@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 
 // bootstrap
 function bootstrap() {
-  loadMessages(ptMessages);
+  loadMessages(messages);
   locale('pt-BR');
   DxConfig({
     forceIsoDateParsing: false, // TODO: verificar se false é o correto
