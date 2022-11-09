@@ -1,6 +1,5 @@
 export class AppService {
   public fuzoHorarios = [
-    { id: 'default', nome: 'System default (UTC)' },
     {
       id: 'America/Scoresbysund',
       nome: '(UTC-01:00) America/Scoresbysund',

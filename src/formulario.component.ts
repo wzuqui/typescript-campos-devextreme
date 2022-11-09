@@ -130,7 +130,7 @@ export class FormularioComponent {
     this.dados$.subscribe((evento) => this._atualizarDados(evento));
 
     const primeiro = this.componentes.find((p) => p);
-      primeiro.focus();
+    primeiro.focus();
   }
 
   private _atualizarDados(evento: DadosEvento): void {
