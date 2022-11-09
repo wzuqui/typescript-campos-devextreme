@@ -52,6 +52,7 @@ export class FormularioComponent {
               maxLength: campo.comprimentoMax,
               label: campo.etiqueta,
               value: dados[campo.propriedade],
+              showClearButton: true,
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
             });
