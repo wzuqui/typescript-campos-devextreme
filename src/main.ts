@@ -5,8 +5,7 @@ import { messages } from './devextreme-pt';
 // stylesheets
 import 'devextreme/dist/css/dx.light.css';
 import './style.css';
-
-import { AppComponent } from './app.component';
+import { AppComponent } from './app/app.component';
 
 // bootstrap
 function bootstrap() {

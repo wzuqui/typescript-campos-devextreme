@@ -1,5 +1,5 @@
 import { AppService } from './app.service';
-import { FormularioComponent } from './formulario.component';
+import { FormularioComponent } from '../formulario/formulario.component';
 
 export class AppComponent {
   constructor(container: HTMLElement, public service = new AppService()) {
