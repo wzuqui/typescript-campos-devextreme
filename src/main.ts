@@ -5,6 +5,7 @@ import { messages } from './devextreme-pt';
 // stylesheets
 import 'devextreme/dist/css/dx.light.css';
 import './style.css';
+import { AppComponent } from './app/app.component';
 
 // bootstrap
 function bootstrap() {
@@ -13,6 +14,7 @@ function bootstrap() {
   DxConfig({
     forceIsoDateParsing: false, // TODO: verificar se false é o correto
   });
+  const aplicacao = new AppComponent(document.getElementById('app'));
 }
 
 bootstrap();
