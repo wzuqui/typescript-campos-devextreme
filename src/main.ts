@@ -13,7 +13,7 @@ function bootstrap() {
   loadMessages(messages);
   locale('pt-BR');
   DxConfig({
-    forceIsoDateParsing: false, // TODO: verificar se false é o correto
+    forceIsoDateParsing: false,
   });
   const aplicacao = new AppComponent(document.getElementById('app'));
 }
