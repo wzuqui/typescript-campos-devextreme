@@ -87,6 +87,9 @@ export class FormularioComponent {
               showClearButton: true,
               onValueChanged: (evento: ValueChangedInfo) =>
                 this.dados$.next([campo.propriedade, evento.value]),
+              showSelectionControls: true,
+              showDropDownButton: true,
+              applyValueMode: 'useButtons',
             };
 
             if (campo.descricao) {
