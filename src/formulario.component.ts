@@ -90,6 +90,7 @@ export class FormularioComponent {
               showSelectionControls: true,
               showDropDownButton: true,
               applyValueMode: 'useButtons',
+              searchEnabled: true,
             };
 
             if (campo.descricao) {
