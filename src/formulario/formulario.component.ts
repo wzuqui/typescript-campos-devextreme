@@ -121,6 +121,7 @@ export class FormularioComponent {
               showDropDownButton: true,
               applyValueMode: 'useButtons',
               searchEnabled: true,
+              itemTemplate: undefined,
             };
 
             if (campo.descricao) {
